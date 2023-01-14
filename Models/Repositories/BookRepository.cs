@@ -14,7 +14,10 @@ namespace BookStore.Models.Repositories
             {
                 new Book()
                 {
-                    Id= 1,Title="C#",Description="brief of c#"
+                    Id= 1,Title="C#",Description="brief of c#",
+                   Author = new    Author{
+                   Id=2
+                   }
 
                 },
                 new Book() {
@@ -29,6 +32,7 @@ namespace BookStore.Models.Repositories
         }
         public void Add(Book entity)
         {
+            entity.Id = books.Max(b => b.Id) +1;
             books.Add(entity);
         }
 
