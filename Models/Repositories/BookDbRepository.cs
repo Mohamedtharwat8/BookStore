@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BookStore.Models.Repositories
@@ -44,5 +44,18 @@ namespace BookStore.Models.Repositories
             db.Update(newBook);
             db.SaveChanges();
         }
+
+
+        public List<Book> Search(string term)
+        {
+            var result = db.Books.Include(a => a.Author)
+               .Where(b => b.Title.Contains(term)
+                    || b.Description.Contains(term)
+                    || b.Author.FullName.Contains(term)
+                    ).ToList();
+
+            return result;
+        }
+
     }
 }

@@ -102,12 +102,12 @@ namespace BookStore.Controllers
         public ActionResult Edit(int id)
         {
             var book = bookRepository.Find(id);
-            var author = book.Author == null ? book.Author.Id =0 : book.Author.Id;
+            var author = book.Author == null ? book.Author.Id = 0 : book.Author.Id;
 
             var viewodel = new BookAuthorViewModel
             {
                 BookId = book.Id,
-                Title = book.Title, 
+                Title = book.Title,
                 Description = book.Description,
                 AuthorId = author,
                 Authors = authorRepository.List().ToList(),
@@ -119,7 +119,7 @@ namespace BookStore.Controllers
         // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( BookAuthorViewModel viewModel)
+        public ActionResult Edit(BookAuthorViewModel viewModel)
         {
             try
             {
@@ -225,8 +225,12 @@ namespace BookStore.Controllers
         }
 
 
+        public ActionResult Search(string term)
+        {
+            var result = bookRepository.Search(term);
+            return View("Index", result);
+        }
 
-         
 
     }
 }

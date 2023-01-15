@@ -59,7 +59,10 @@ namespace BookStore.Models.Repositories
         {
             return books;
         }
-
+        public IList<Book> Search(string term)
+        {
+            return books.Where(a => a.Title.Contains(term)).ToList();
+        }
         public void Update(int id, Book newBook)
         {
             var book = Find(id);
@@ -68,6 +71,11 @@ namespace BookStore.Models.Repositories
             book.Description = newBook.Description;
             book.Author = newBook.Author;
             book.ImageUrl = newBook.ImageUrl;
+        }
+
+        List<Book> IBookStoreRepository<Book>.Search(string term)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
