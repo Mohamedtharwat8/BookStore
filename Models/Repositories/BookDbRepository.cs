@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic; 
 using System.Linq;
 
 namespace BookStore.Models.Repositories
@@ -29,13 +30,13 @@ namespace BookStore.Models.Repositories
 
         public Book Find(int id)
         {
-            var book = db.Books.SingleOrDefault(e => e.Id == id);
+            var book = db.Books.Include(a => a.Author).SingleOrDefault(e => e.Id == id);
             return book;
         }
 
         public IList<Book> List()
         {
-            return db.Books.ToList();
+            return db.Books.Include(a => a.Author).ToList();
         }
 
         public void Update(int id, Book newBook)

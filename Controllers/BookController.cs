@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Reflection;
+using System;
 
 namespace BookStore.Controllers
 {
@@ -59,15 +60,11 @@ namespace BookStore.Controllers
             {
                 try
                 {
-                    string fileName = string.Empty;
-                    if (model.File!=null)
-                    {
-                        string uploads = Path.Combine(hosting.WebRootPath  ,"uploads");
-                        fileName = model.File.FileName;
-                        string fullPath = Path.Combine(uploads,fileName);
-                        model.File.CopyTo(new FileStream(fullPath, FileMode.Create));
+                    //string fileName = UploadFile(model.File) == null ? string.Empty : UploadFile(model.File);
+                    //using colesce expression
+                    string fileName = UploadFile(model.File) ?? string.Empty;
 
-                    }
+
                     if (model.AuthorId == -1)
                     {
                         ViewBag.Message = "Please select an author from the list!";
@@ -131,6 +128,7 @@ namespace BookStore.Controllers
                 var author = authorRepository.Find(viewModel.AuthorId);
                 Book book = new Book
                 {
+                    Id = viewModel.BookId,
                     Title = viewModel.Title,
                     Description = viewModel.Description,
                     Author = author,
@@ -141,7 +139,7 @@ namespace BookStore.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -227,6 +225,8 @@ namespace BookStore.Controllers
         }
 
 
+
+         
 
     }
 }

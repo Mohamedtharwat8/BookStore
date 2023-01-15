@@ -45,14 +45,15 @@ namespace BookStore
                 app.UseDeveloperExceptionPage();
             }
 
-            
+
 
             app.UseRouting();
             app.UseStaticFiles();
+
             //app.UseMvcWithDefaultRoute();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+                endpoints.MapControllerRoute("default", "{controller=Book}/{action=Index}");
             });
             //app.UseEndpoints(endpoints =>
             //{
